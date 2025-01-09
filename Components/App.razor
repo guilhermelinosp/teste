@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Blazor App - A Blazor Server Application" />
+        <meta name="keywords" content="Blazor, Blazor Server, Web App, Single Page Application" />
+        <meta name="author" content="Your Name or Company" />
+        
+        <meta property="og:title" content="Blazor App" />
+        <meta property="og:description" content="Blazor App - A Blazor Server Application" />
+        <meta property="og:image" content="assets/favicon.png" />
+        <meta property="og:type" content="website" />
+    
+        <title>Blazor App</title>
+        <link rel="icon" href="@Assets["assets/favicon.png"]" type="image/png" title="Favicon" />
+        <link rel="stylesheet" href="@Assets["css/app.css"]" />
+        <link rel="preload" href="@Assets["_framework/blazor.web.js"]" as="script" />
+        
+        <HeadOutlet />
+    </head>
+    
+    <body>
+        <Routes />
+        <script src="@Assets["_framework/blazor.web.js"]" defer></script>
+        <noscript>
+            <p>JavaScript is required to run this application. Please enable JavaScript to continue.</p>
+        </noscript>
+    </body>
+
+</html>

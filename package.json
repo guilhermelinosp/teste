@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "build:tailwind": "NODE_ENV=production npx tailwindcss -i ./wwwroot/css/app.css -o ./wwwroot/css/app.css --config ./wwwroot/js/tailwind.config.js --minify",
+    "watch:tailwind": "NODE_ENV=development npx tailwindcss -i ./wwwroot/css/app.css -o ./wwwroot/css/app.css --watch --debug --config ./wwwroot/js/tailwind.config.js"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.16"
+  },
+  "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "cssnano": "^7.0.6"
+  }
+}
