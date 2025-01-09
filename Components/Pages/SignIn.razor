@@ -1,62 +1,55 @@
 ﻿@page "/"
+@inject NavigationManager Navigation
 
 <PageTitle>Sign In</PageTitle>
 
 <div class="min-h-screen flex items-center justify-center bg-gray-100">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
         <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Sign In</h2>
-        <EditForm Model="@model" OnValidSubmit="HandleValidSubmit" FormName="signIn" class="space-y-4">
+        <EditForm  EditContext="_editContext" OnValidSubmit="HandleSubmitAsync" FormName="signInForm" class="space-y-4">
+            <DataAnnotationsValidator />
+
             <!-- Email Field -->
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                 <InputText
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    class="form-control mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                     id="email"
-                    @bind-Value="model.Email"
+                    @bind-Value="_signInForm.Email"
                     aria-describedby="emailHelp"
                     autocomplete="email"/>
-                <ValidationMessage For="@(() => model.Email)" class="text-sm text-red-500"/>
+                <ValidationMessage For="@(() => _signInForm.Email)" class="text-sm text-red-500"/>
             </div>
 
             <!-- Password Field -->
             <div>
                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                 <InputText
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    class="form-control mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                     id="password"
                     type="password"
-                    @bind-Value="model.Password"
+                    @bind-Value="_signInForm.Password"
                     aria-describedby="passwordHelp"/>
-                <ValidationMessage For="@(() => model.Password)" class="text-sm text-red-500"/>
+                <ValidationMessage For="@(() => _signInForm.Password)" class="text-sm text-red-500"/>
             </div>
 
             <!-- Remember Me -->
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <InputCheckbox
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        class="form-control h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                         id="rememberme"
-                        @bind-Value="model.RememberMe"/>
+                        @bind-Value="_signInForm.RememberMe"/>
                     <label for="rememberme" class="ml-2 block text-sm text-gray-900">Remember me</label>
                 </div>
                 <div>
-                    <a href="#" class="text-sm text-indigo-600 hover:underline">Forgot your password?</a>
+                    <a href="/forgot-password" class="text-sm text-indigo-600 hover:underline">Forgot your password?</a>
                 </div>
             </div>
 
             <!-- Submit Button -->
             <div>
-                <button
-                    type="submit"
-                    class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 flex items-center justify-center"
-                    disabled="@loading">
-                    @if (loading)
-                    {
-                        <svg class="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 1 1 16 0A8 8 0 0 1 4 12z"></path>
-                        </svg>
-                    }
+                <button class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 flex items-center justify-center" type="submit">
                     Sign In
                 </button>
             </div>
@@ -66,50 +59,3 @@
         </p>
     </div>
 </div>
-
-@code {
-    private Model? model { get; set; } = new();
-    private bool loading;
-
-    protected override void OnInitialized()
-    {
-    }
-
-    private async Task HandleValidSubmit()
-    {
-        loading = true;  // Start loading
-        StateHasChanged();  // Trigger UI update
-
-        Console.WriteLine("Formulário enviado!");
-        Console.WriteLine($"Email preenchido? {model!.Email is not null}");
-        Console.WriteLine($"Password preenchido? {model!.Password is not null}");
-        Console.WriteLine($"Remember Me: {model!.RememberMe}");
-
-        if (model!.Email is null || model!.Password is null)
-        {
-            Console.WriteLine("Email ou senha estão nulos.");
-        }
-        else
-        {
-            Console.WriteLine($"Email: {model.Email}, Password: {model.Password}");
-        }
-
-        // Simulate some delay (e.g., calling an API or processing)
-        await Task.Delay(2000); // Adjust delay as needed
-
-        loading = false;  // End loading
-        StateHasChanged();  // Trigger UI update again to hide the spinner
-    }
-
-    public class Model
-    {
-        [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Invalid email format.")]
-        public string? Email { get; set; }
-
-        [Required(ErrorMessage = "Password is required.")]
-        public string? Password { get; set; }
-
-        public bool RememberMe { get; set; }
-    }
-}

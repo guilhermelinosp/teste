@@ -25,16 +25,3 @@
         For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong> and restarting the application.
     </p>
 </div>
-
-@code {
-    [CascadingParameter] private HttpContext? HttpContext { get; set; }
-
-    private string? RequestId { get; set; }
-    private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
-    protected override void OnInitialized()
-    {
-        // Set the RequestId from Activity or HttpContext.TraceIdentifier
-        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
-    }
-}
